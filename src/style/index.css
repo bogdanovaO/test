@@ -1,0 +1,73 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.form {
+  margin: 0 auto;
+  width: 40%;
+}
+
+.chart {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 24px 20px 10px 20px;
+}
+
+.chart__info {
+  height: 118px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 30%;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin: 20px 13% 0 0;
+}
+
+.chart__info > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.chart__info > div > div {
+  font-size: 13px;
+  padding: 6px 0 6px 3px;
+  width: 100px;
+  height: 28px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(10, 57, 59, 0.2);
+          box-shadow: 0 2px 4px 0 rgba(10, 57, 59, 0.2);
+}
+
+.chart__info > div > div:first-child {
+  margin-right: 4px;
+}
+
+canvas {
+  width: 250px !important;
+  height: 250px !important;
+}
+
+.mainInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.free {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.insideText {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  top: 0;
+  background: #fff;
+}
+/*# sourceMappingURL=index.css.map */
