@@ -2,17 +2,21 @@
 import "./style/index.scss";
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-// import 'chartjs-plugin-doughnutlabel';
 
-const btn = document.querySelector('.btn');
-const totalEl  = document.querySelector('.insideText__total');
+
+let btn = document.querySelector('.btn');
+let totalEl  = document.querySelector('.insideText__total');
 let data = [12, 17, 20, 50];
-
-
 let total = data.reduce((a, b) => a + b, 0);
+
 totalEl.innerHTML  = total;
 
-btn.addEventListener('click', getValues);
+
+function changeTotalFontSize() {
+total.toString().length  >  4 ? document.querySelector('.insideText__total').style.fontSize = '13px' : document.querySelector('.insideText__total').style.fontSize = '33px';
+}
+changeTotalFontSize();
+
 
 function getValues() {
   const vegetables = document.querySelector('.vegetables').value;
@@ -20,30 +24,30 @@ function getValues() {
   const bread = document.querySelector('.bread').value;
   const fish = document.querySelector('.fish').value;
 
-  myChart.data.datasets[0].data[2] = Number(vegetables);
-  myChart.data.datasets[0].data[0] = Number(meat);
-  myChart.data.datasets[0].data[1] = Number(bread);
-  myChart.data.datasets[0].data[3] = Number(fish);
-  
-  const total = myChart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+  reRenderChart(Number(vegetables), Number(meat), Number(bread), Number(fish))
+}
+btn.addEventListener('click', getValues);
+
+
+function reRenderChart(vegetables, meat, bread, fish) {
+  myChart.data.datasets[0].data[2] = vegetables;
+  myChart.data.datasets[0].data[0] = meat;
+  myChart.data.datasets[0].data[1] = bread;
+  myChart.data.datasets[0].data[3] = fish;
+
+  total = myChart.data.datasets[0].data.reduce((a, b) => a + b, 0);
   totalEl.innerHTML  = total;
-  console.log(total)
-  
   myChart.update()
   modal.style.display = "none";
+  changeTotalFontSize();
 }
-// function getTotal() {
-// 	var sum = myChart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-// 	return `Total: ${sum}`;
-// }
 
-var ctx = document.getElementById('myChart');
 
-var myChart = new Chart(ctx, {
+let ctx = document.getElementById('myChart');
+
+let myChart = new Chart(ctx, {
   type: 'doughnut',
-
   data: {
-    // labels: ['January', 'February', 'March', 'April'],
     datasets: [{
       data: data,
       borderRadius: 50,
@@ -61,14 +65,13 @@ var myChart = new Chart(ctx, {
   },
 
   plugins: [ChartDataLabels],
-
   options: {
     layout: {
       padding: {
         left: 30,
         right: 30,
         top: 25,
-        bottom: 0
+        bottom: 10
       }
     },
 
@@ -80,6 +83,12 @@ var myChart = new Chart(ctx, {
         display: true,
         anchor: 'start',
         backgroundColor: '#fff',
+        color:  [
+          '#ffdb0d',
+          '#0a8f8f',
+          '#0a393b',
+          '#bbe5ea'
+        ],
         borderRadius: 100,
         borderColor: [
           '#ffdb0d',
@@ -88,12 +97,27 @@ var myChart = new Chart(ctx, {
           '#bbe5ea'
         ],
         borderWidth: 5,
-        padding: {
-          left: 8,
-          right: 8,
-          top: 13,
-          bottom: 13,
-        },
+        padding: function(context) {
+            var index = context.dataIndex;
+            var value = context.dataset.data[index];
+            return value > 9 && value < 100  ? {
+              left: 8,
+              right: 8,
+              top: 13,
+              bottom: 13,
+            } : 
+            value > 99 ? {
+              left: 5,
+              right: 5,
+              top: 12,
+              bottom: 12,
+            }  : {
+              left: 12,
+              right: 12,
+              top: 13,
+              bottom: 13,
+            };
+          },
         labels: {
           title: {
             font: {
@@ -118,7 +142,6 @@ var myChart = new Chart(ctx, {
         }
       }
     },
-
     animation: {
       animateRotate: true,
     }
@@ -126,30 +149,19 @@ var myChart = new Chart(ctx, {
 });
 
 
-
-
-
-// Get the modal
 let modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
 let openModal = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
 let span = document.getElementsByClassName("close")[0];
 
-// When the user clicks on the button, open the modal
 openModal.onclick = function () {
   console.log('ds')
   modal.style.display = "block";
 }
 
-// When the user clicks on <span> (x), close the modal
 span.onclick = function () {
   modal.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
