@@ -43,10 +43,16 @@ function reRenderChart(vegetables, meat, bread, fish) {
 
 
   total = myChart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-  totalEl.innerHTML  = total;
-  myChart.update()
-  modal.className = 'modalOff';
-  changeTotalFontSize();
+
+  if  (total > 0) {
+    totalEl.innerHTML  = total;
+    myChart.update()
+    modal.className = 'modalOff';
+    changeTotalFontSize();
+  } else {
+    alert('Введите число больше 0');
+  }
+
 }
 
 
