@@ -35,10 +35,17 @@ function reRenderChart(vegetables, meat, bread, fish) {
   myChart.data.datasets[0].data[1] = bread;
   myChart.data.datasets[0].data[3] = fish;
 
+
+  document.querySelector('.vegetables').value = "";
+  document.querySelector('.meat').value = "";
+  document.querySelector('.bread').value = "";
+  document.querySelector('.fish').value = "";
+
+
   total = myChart.data.datasets[0].data.reduce((a, b) => a + b, 0);
   totalEl.innerHTML  = total;
   myChart.update()
-  modal.style.display = "none";
+  modal.className = 'modalOff';
   changeTotalFontSize();
 }
 
@@ -149,21 +156,20 @@ let myChart = new Chart(ctx, {
 });
 
 
-let modal = document.getElementById("myModal");
-let openModal = document.getElementById("myBtn");
-let span = document.getElementsByClassName("close")[0];
+let modal = document.getElementById("modal");
+let openModal = document.getElementById("changeButton");
+let close = document.getElementById("close");
 
 openModal.onclick = function () {
-  console.log('ds')
-  modal.style.display = "block";
+  modal.className = 'modalOn';
 }
 
-span.onclick = function () {
-  modal.style.display = "none";
+close.onclick = function () {
+  modal.className = 'modalOff';
 }
 
 window.onclick = function (event) {
   if (event.target == modal) {
-    modal.style.display = "none";
+    modal.className = 'modalOff';
   }
 }
